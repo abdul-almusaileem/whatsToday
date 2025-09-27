@@ -6,7 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F037449F2E866D46001B2439 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F037449E2E866D46001B2439 /* WidgetKit.framework */; };
+		F03744A12E866D46001B2439 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03744A02E866D46001B2439 /* SwiftUI.framework */; };
+		F03744AE2E866D48001B2439 /* whatsTodayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F037449C2E866D46001B2439 /* whatsTodayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		F03744AC2E866D48001B2439 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F05073722E82B8D600D835AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F037449B2E866D46001B2439;
+			remoteInfo = whatsTodayWidgetExtension;
+		};
 		F050738A2E82B8D800D835AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F05073722E82B8D600D835AD /* Project object */;
@@ -23,15 +36,65 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F03744AF2E866D48001B2439 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F03744AE2E866D48001B2439 /* whatsTodayWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F037449C2E866D46001B2439 /* whatsTodayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = whatsTodayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F037449E2E866D46001B2439 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		F03744A02E866D46001B2439 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F03744BD2E86BD31001B2439 /* whatsTodayWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = whatsTodayWidgetExtension.entitlements; sourceTree = "<group>"; };
 		F050737A2E82B8D600D835AD /* whatsToday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whatsToday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05073892E82B8D800D835AD /* whatsTodayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = whatsTodayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05073932E82B8D800D835AD /* whatsTodayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = whatsTodayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F03744B22E866D48001B2439 /* Exceptions for "whatsTodayWidget" folder in "whatsTodayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F037449B2E866D46001B2439 /* whatsTodayWidgetExtension */;
+		};
+		F03744C12E86C2D7001B2439 /* Exceptions for "whatsToday" folder in "whatsTodayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				models/Workout.swift,
+				models/workoutDetail.swift,
+				models/WorkoutType.swift,
+				utils/SharedModelContainer.swift,
+			);
+			target = F037449B2E866D46001B2439 /* whatsTodayWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F03744A22E866D46001B2439 /* whatsTodayWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F03744B22E866D48001B2439 /* Exceptions for "whatsTodayWidget" folder in "whatsTodayWidgetExtension" target */,
+			);
+			path = whatsTodayWidget;
+			sourceTree = "<group>";
+		};
 		F050737C2E82B8D600D835AD /* whatsToday */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F03744C12E86C2D7001B2439 /* Exceptions for "whatsToday" folder in "whatsTodayWidgetExtension" target */,
+			);
 			path = whatsToday;
 			sourceTree = "<group>";
 		};
@@ -48,6 +111,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F03744992E866D46001B2439 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F03744A12E866D46001B2439 /* SwiftUI.framework in Frameworks */,
+				F037449F2E866D46001B2439 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F05073772E82B8D600D835AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,12 +144,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F037449D2E866D46001B2439 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F037449E2E866D46001B2439 /* WidgetKit.framework */,
+				F03744A02E866D46001B2439 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F05073712E82B8D600D835AD = {
 			isa = PBXGroup;
 			children = (
+				F03744BD2E86BD31001B2439 /* whatsTodayWidgetExtension.entitlements */,
 				F050737C2E82B8D600D835AD /* whatsToday */,
 				F050738C2E82B8D800D835AD /* whatsTodayTests */,
 				F05073962E82B8D800D835AD /* whatsTodayUITests */,
+				F03744A22E866D46001B2439 /* whatsTodayWidget */,
+				F037449D2E866D46001B2439 /* Frameworks */,
 				F050737B2E82B8D600D835AD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +172,7 @@
 				F050737A2E82B8D600D835AD /* whatsToday.app */,
 				F05073892E82B8D800D835AD /* whatsTodayTests.xctest */,
 				F05073932E82B8D800D835AD /* whatsTodayUITests.xctest */,
+				F037449C2E866D46001B2439 /* whatsTodayWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +180,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F037449B2E866D46001B2439 /* whatsTodayWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F03744B32E866D48001B2439 /* Build configuration list for PBXNativeTarget "whatsTodayWidgetExtension" */;
+			buildPhases = (
+				F03744982E866D46001B2439 /* Sources */,
+				F03744992E866D46001B2439 /* Frameworks */,
+				F037449A2E866D46001B2439 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F03744A22E866D46001B2439 /* whatsTodayWidget */,
+			);
+			name = whatsTodayWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = whatsTodayWidgetExtension;
+			productReference = F037449C2E866D46001B2439 /* whatsTodayWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F05073792E82B8D600D835AD /* whatsToday */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F050739D2E82B8D800D835AD /* Build configuration list for PBXNativeTarget "whatsToday" */;
@@ -102,10 +209,12 @@
 				F05073762E82B8D600D835AD /* Sources */,
 				F05073772E82B8D600D835AD /* Frameworks */,
 				F05073782E82B8D600D835AD /* Resources */,
+				F03744AF2E866D48001B2439 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F03744AD2E866D48001B2439 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F050737C2E82B8D600D835AD /* whatsToday */,
@@ -173,6 +282,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					F037449B2E866D46001B2439 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					F05073792E82B8D600D835AD = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -203,11 +315,19 @@
 				F05073792E82B8D600D835AD /* whatsToday */,
 				F05073882E82B8D800D835AD /* whatsTodayTests */,
 				F05073922E82B8D800D835AD /* whatsTodayUITests */,
+				F037449B2E866D46001B2439 /* whatsTodayWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F037449A2E866D46001B2439 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F05073782E82B8D600D835AD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +352,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F03744982E866D46001B2439 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F05073762E82B8D600D835AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -256,6 +383,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F03744AD2E866D48001B2439 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F037449B2E866D46001B2439 /* whatsTodayWidgetExtension */;
+			targetProxy = F03744AC2E866D48001B2439 /* PBXContainerItemProxy */;
+		};
 		F050738B2E82B8D800D835AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F05073792E82B8D600D835AD /* whatsToday */;
@@ -269,6 +401,62 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F03744B02E866D48001B2439 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = whatsTodayWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4XQ3TYPHX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = whatsTodayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = whatsTodayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = personalProject.whatsToday.whatsTodayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F03744B12E866D48001B2439 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = whatsTodayWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4XQ3TYPHX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = whatsTodayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = whatsTodayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = personalProject.whatsToday.whatsTodayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F050739B2E82B8D800D835AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -393,8 +581,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = whatsToday/whatsToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4XQ3TYPHX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -411,7 +601,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -420,8 +610,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = whatsToday/whatsToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4XQ3TYPHX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -438,7 +630,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -513,6 +705,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F03744B32E866D48001B2439 /* Build configuration list for PBXNativeTarget "whatsTodayWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F03744B02E866D48001B2439 /* Debug */,
+				F03744B12E866D48001B2439 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F05073752E82B8D600D835AD /* Build configuration list for PBXProject "whatsToday" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
