@@ -27,67 +27,32 @@ struct Home: View {
     }
     
     var body: some View {
-        NavigationStack {
+        TabView {
+            TodaysWorkout()
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("Home")
+                }
             
-            ZStack {
-                Color.background.ignoresSafeArea()
-                
-                VStack (alignment: .leading){
-                    
-                    if upcomingWorkouts.count > 0
-                    {
-                        TodaysWorkout(upcomingWorkouts: upcomingWorkouts, detailsSheet: $detailsSheet, selectedWorkout: $selectedWorkout)
-                    }
-                    
-                    WorkoutList(selectedWorkout: $selectedWorkout, detailsSheet: $detailsSheet, searchText: $searchText, calanderSheet: $calanderSheet, workouts: workouts)
+                Calender()
+                .tabItem {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.accent)
+                        .bold()
                 }
-                
-                .backgroundStyle(themeManager.currentTheme.backgroundColor)
-                .navigationBarTitle("Here's your Schedule")
-                .foregroundStyle(.accent)
-                .navigationBarTitleDisplayMode(.large)
-                .scrollContentBackground(.hidden)
-                .searchable(text: $searchText)
-                
-                
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Image(systemName: "calendar")
-                            .foregroundStyle(.accent)
-                            .bold()
-                            .onTapGesture{
-                                calanderSheet.toggle()
-                            }
-                    }
-                    ToolbarItem(placement: .bottomBar) {
-                        Button {
-                            selectedWorkout = nil
-                            detailsSheet.toggle()
-                        } label: {
-                            Image(systemName: "plus")
-                                .foregroundStyle(.accent)
-                                .bold()
-                        }
-                    }
-                    
-                }
-                .scrollContentBackground(.hidden)
-                .sheet(isPresented: $detailsSheet, content: {
-                    Details(workout: selectedWorkout)
-                })
-                .sheet(isPresented: $calanderSheet, content: {
-                    Calender();
-                })
-                .onAppear() {
-                    UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color(themeManager.currentTheme.accentColor))]
-                }
-                
+            Search()
+            .tabItem {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.accent)
+                    .bold()
             }
             
         }
         
     }
+    
 }
+
 
 #Preview {
     Home()

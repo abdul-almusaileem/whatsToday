@@ -180,7 +180,7 @@ struct Details: View {
                     
                     // if today's date then update widget
                     //
-                    if(Calendar.current.isDateInToday(date)) {
+                    if(Calendar.current.isDateInToday(date) && !title.isEmpty) {
                         print("reloading widget")
                         WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
                     }

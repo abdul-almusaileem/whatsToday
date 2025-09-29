@@ -6,13 +6,62 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 struct Calender: View {
+    @State private var selectedDate: Date?
+    @State private var filteredWorkouts: [Workout] = []
+    @State private var sheetIsPresented: Bool = false
+    
+    @Query(sort: \Workout.date, order: .reverse) private var workouts: [Workout]
+
     var body: some View {
-        Text("Calander")
+        NavigationStack {
+            ZStack {
+                Color.background.opacity(1).ignoresSafeArea()
+                
+                VStack {
+                    Text("Planned Workouts")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.accent)
+                        .padding()
+                        .padding(.bottom, 50)
+                    
+                    // FIXME: need to update realtime
+                    //
+                    CalendarViewRepresentable(workouts: workouts, selectedDate: $selectedDate)
+                        .frame(height: 500)
+                        .padding()
+                    Spacer()
+                }
+                .onChange(of: selectedDate) { oldval, newValue in
+                    if let newValue = newValue {
+                        filteredWorkouts = workouts.filter {
+                            $0.date.formatted(date: .numeric, time: .omitted) == newValue.formatted(date: .numeric, time: .omitted)
+                        }
+                    }
+                    
+                    if filteredWorkouts.count > 0 {
+                        sheetIsPresented.toggle()
+                    }
+                    
+                }
+                .sheet(isPresented: $sheetIsPresented) {
+                    WorkoutList(sheet: $sheetIsPresented, workouts: filteredWorkouts)
+                }
+            }
+        }
+               
+        
+        
     }
 }
 
 #Preview {
     Calender()
+    
+
+    
 }

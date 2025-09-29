@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Workout: Identifiable {
+final class Workout: Identifiable, Equatable {
     @Attribute(.unique)
     var id: UUID
     var title: String

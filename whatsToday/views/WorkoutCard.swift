@@ -15,7 +15,9 @@ struct WorkoutCard: View {
                 Text(workout.title)
                     .font(.title.bold())
                     .foregroundStyle(.accent)
-                    .minimumScaleFactor(0.5)
+                    .minimumScaleFactor(0.75)
+                    .lineLimit(1)
+                    
                 Spacer()
                 Text(workout.date.formatted(date: .abbreviated, time: .omitted))
                     .opacity(themeManager.currentTheme.opacity)
@@ -51,7 +53,7 @@ struct WorkoutCard: View {
                     }
                     Spacer()
                 }
-                .frame(maxWidth: 500)
+//                .frame(maxWidth: 500)
                 .padding(.trailing, 20)
                 
                 
@@ -64,7 +66,9 @@ struct WorkoutCard: View {
                         .foregroundStyle(.text)
                         .lineLimit(1)
                 }
-                .fixedSize()
+//                .fixedSize()
+                
+                
                 
             }
             .padding([.leading, .trailing], 20)
@@ -81,6 +85,8 @@ struct WorkoutCard: View {
             length * 0.9
         }
         .fixedSize()
+//        .frame(width: 120, height: 1)
+
         
     }
 }

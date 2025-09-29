@@ -6,56 +6,81 @@
 //
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 
 struct TodaysWorkout: View {
     
     
     
-    @Binding private var selectedWorkout: Workout?
-    @Binding private var detailsSheet: Bool
+    @State private var selectedWorkout: Workout?
+    @State private var detailsSheet: Bool = false
     
-    private var upcomingWorkouts: [Workout]
+    @Environment(\.modelContext) private var modelContext;
+    @Query(filter: Workout.nextWorkoutPredicate(), sort: \Workout.date, order: .reverse) private var upcomingWorkouts: [Workout]
     
     
-    init(upcomingWorkouts: [Workout], detailsSheet: Binding<Bool>, selectedWorkout: Binding<Workout?>) {
-        self.upcomingWorkouts = upcomingWorkouts;
-        _detailsSheet = detailsSheet;
-        _selectedWorkout = selectedWorkout
-    }
+    
     
     var body: some View {
-        Text(upcomingWorkouts.count > 1 ? "Upcoming workouts" : "Upcoming workout")
-            .font(.headline)
-            .fontWeight(.bold)
-            .foregroundStyle(.accent)
-            .padding()
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                ForEach(upcomingWorkouts) { workout in
-                    WorkoutCard(workout: workout)
-                        .onTapGesture {
-                            selectedWorkout = workout;
-                            detailsSheet.toggle()
-                        }
-                        .fixedSize(horizontal: true, vertical: true)                        .padding()
+        NavigationStack {
+            ZStack {
+                Color.background.opacity(1).ignoresSafeArea()
+                VStack {
+                    Text(upcomingWorkouts.count > 1 ? "Upcoming workouts" : "Upcoming workout")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.accent)
+                        .padding()
                     
+                    List {
+                        ForEach(upcomingWorkouts) { workout in
+                            WorkoutCard(workout: workout)
+                                .onTapGesture {
+                                    selectedWorkout = workout;
+                                    detailsSheet.toggle()
+                                }
+                                .padding()
+                            
+                        }
+                        .onDelete(perform: { indexSet in
+                            for index in indexSet {
+                                modelContext.delete(upcomingWorkouts[index])
+                                
+                                if(Calendar.current.isDateInToday(upcomingWorkouts[index].date)) {
+                                    print("reloading widget")
+                                    WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
+                                }
+                            }
+                        })
+                    }
+                    .scrollContentBackground(.hidden)
+                    .animation(.easeIn, value: upcomingWorkouts)
+                    
+                    
+                    
+                    Button(action: {
+                        selectedWorkout = nil;
+                        detailsSheet.toggle()
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.accentColor)
+                    }
+                    .padding()
+                    Spacer()
+                    
+                        .sheet(isPresented: $detailsSheet) {
+                            Details(workout: selectedWorkout)
+                        }
                 }
             }
-            
         }
-        .scrollContentBackground(.hidden)
-        .scrollTargetBehavior(.viewAligned)
-        .safeAreaPadding(.horizontal, 40)
-        
-        Divider()
     }
-    
 }
 
+
+
 #Preview {
-    @Previewable @State var myWorkout: Workout? = nil
-    TodaysWorkout(upcomingWorkouts: [Workout(title: "long run", date: .now, type: WorkoutType.running, tags: ["test",], summary: "Test Run"),
-                                     Workout(title: "t", date: .now, type: WorkoutType.cycling, tags: ["test",], summary: "Test Run")], detailsSheet: Binding.constant(false), selectedWorkout: $myWorkout)
-    .environmentObject(ThemeManager())
+    TodaysWorkout()
+        .environmentObject(ThemeManager())
 }
