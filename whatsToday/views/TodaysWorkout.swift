@@ -19,15 +19,12 @@ struct TodaysWorkout: View {
     @Environment(\.modelContext) private var modelContext;
     @Query(filter: Workout.nextWorkoutPredicate(), sort: \Workout.date, order: .reverse) private var upcomingWorkouts: [Workout]
     
-    
-    
-    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.background.opacity(1).ignoresSafeArea()
                 VStack {
-                    Text(upcomingWorkouts.count > 1 ? "Upcoming workouts" : "Upcoming workout")
+                    Text(upcomingWorkouts.count > 1 ? "Upcoming sessions" : "Upcoming session")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(.accent)

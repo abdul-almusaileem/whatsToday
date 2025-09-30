@@ -12,7 +12,7 @@ struct CalendarViewRepresentable: UIViewRepresentable {
     
     private var workouts: [Workout]
     @Binding private var selectedDate: Date?
-
+    
     
     init(workouts: [Workout], selectedDate: Binding<Date?>) {
         self.workouts = workouts;
@@ -27,6 +27,8 @@ struct CalendarViewRepresentable: UIViewRepresentable {
         
         
         calendarView.delegate = context.coordinator
+//        context.coordinator.calendarView = calendarView // Store reference for refresh
+//
         
         
         let selection = UICalendarSelectionSingleDate(delegate: context.coordinator)
@@ -36,6 +38,12 @@ struct CalendarViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
+        
+        context.coordinator.parent = self
+        
+        // Force refresh of decorations
+        uiView.delegate = nil
+        uiView.delegate = context.coordinator
         
     }
     
@@ -68,7 +76,6 @@ struct CalendarViewRepresentable: UIViewRepresentable {
         
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
             // Convert DateComponents to Date and update the SwiftUI binding
-//            
             parent.selectedDate = dateComponents?.date
             
         }
@@ -77,5 +84,6 @@ struct CalendarViewRepresentable: UIViewRepresentable {
             // Return true to allow selection for a specific date
             return true
         }
+        
     }
 }

@@ -22,15 +22,14 @@ struct Calender: View {
                 Color.background.opacity(1).ignoresSafeArea()
                 
                 VStack {
-                    Text("Planned Workouts")
+                    Text("Planned sessions")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(.accent)
                         .padding()
                         .padding(.bottom, 50)
                     
-                    // FIXME: need to update realtime
-                    //
+
                     CalendarViewRepresentable(workouts: workouts, selectedDate: $selectedDate)
                         .frame(height: 500)
                         .padding()
