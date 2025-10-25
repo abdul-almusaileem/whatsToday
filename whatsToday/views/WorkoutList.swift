@@ -32,37 +32,42 @@ struct WorkoutList: View {
                 List {
                     ForEach(workouts) { workout in
                         SmallWorkoutCard(workout: workout)
+                            .padding()
                             .onTapGesture {
                                 
                                 selectedWorkout = workout;
                                 detailsSheet.toggle()
                             }
-                    }
-                    .onDelete(perform: { indexSet in
-                        for index in indexSet {
-                            modelContext.delete(workouts[index])
-                            
-                            if(Calendar.current.isDateInToday(workouts[index].date)) {
-                                print("reloading widget")
-                                WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
+                            .swipeActions(edge: .trailing) {
+                                
+                                Button(role: .destructive) {
+                                    modelContext.delete(workout)
+                                    if(Calendar.current.isDateInToday(workout.date)) {
+                                        WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
+                                    }
+                                    
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                                Button {
+                                    workout.isDone.toggle()
+                                    try? modelContext.save()
+                                } label: {
+                                    Image(systemName: workout.isDone ? "xmark" :"checkmark")                                    }
+                                .tint(workout.isDone ?  .gray: .accentColor)
                             }
-                            
-                            
-                            
-                        }
-                        dismiss()
-                    })
+                    }
+                    
                 }
                 .scrollContentBackground(.hidden)
                 .animation(.easeIn, value: workouts)
             }
             
-            .sheet(isPresented: $detailsSheet) {
-                
-                // FIXME: selected workout is always nil
-                //
-                Details(workout: selectedWorkout)
+            .sheet(item: $selectedWorkout) { workout in
+                Details(workout: workout)
             }
+            
+            
         }
         
     }
@@ -70,6 +75,6 @@ struct WorkoutList: View {
 
 #Preview {
     WorkoutList(workouts: [])
-        
+    
 }
 

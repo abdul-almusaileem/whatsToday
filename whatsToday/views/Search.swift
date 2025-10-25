@@ -70,12 +70,9 @@ struct Search: View {
             }
         }
     
-            
-            
-            
                 .searchable(text: $searchText, prompt: "Search workouts, tags")
-                .sheet(isPresented: $detailsSheet) {
-                    Details(workout: selectedWorkout)
+                .sheet(item: $selectedWorkout) { workout in
+                    Details(workout: workout)
                 }
                     
         }

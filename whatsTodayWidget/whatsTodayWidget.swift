@@ -8,6 +8,7 @@
 import WidgetKit
 import SwiftUI
 import SwiftData
+import AppIntents
 
 struct Provider: @preconcurrency TimelineProvider {
     @MainActor func placeholder(in context: Context) -> SimpleEntry {
@@ -28,22 +29,57 @@ struct Provider: @preconcurrency TimelineProvider {
         completion(timeline)
     }
     
-    @MainActor
-    private func getTodaysWorkout() -> [Workout] {
-        let modelContainer = SharedModelContainer.shared
-        let descriptor = FetchDescriptor<Workout>(
-            predicate: Workout.nextWorkoutPredicate(),
-            sortBy: [
-                .init(\.date)
-            ]
-        )
-        
-        let workouts: [Workout]? = try? modelContainer.mainContext.fetch(descriptor)
-        
-        return workouts ?? []
+}
+
+@MainActor
+func getTodaysWorkout() -> [Workout] {
+    let modelContainer = SharedModelContainer.shared
+    let descriptor = FetchDescriptor<Workout>(
+        predicate: Workout.widgetWorkoutPredicate(),
+        sortBy: [
+            .init(\.date)
+        ]
+    )
+    
+    let workouts: [Workout]? = try? modelContainer.mainContext.fetch(descriptor)
+    
+    return workouts ?? []
+    
+}
+
+
+struct ButtonIntent: AppIntent {
+    static var title: LocalizedStringResource = "My Widget Button Intent"
+    @Parameter(title:"workoutId")
+    var id: String
+    
+    
+    
+    init(id: String) {
+        self.id = id
+    }
+    init() {
         
     }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        let workouts = getTodaysWorkout()
+        
+        guard let index = workouts.firstIndex(where: { $0.id.uuidString == id }) else {
+            return .result()
+        }
+        let updatedWorkout = workouts[index]
+        updatedWorkout.isDone.toggle()
+        await MainActor.run {
+            let context = SharedModelContainer.shared.mainContext
+            try? context.save()
+        }
+        
+        return .result()
+    }
 }
+
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
@@ -56,13 +92,16 @@ struct whatsTodayWidgetEntryView : View {
         ZStack {
             VStack {
                 if entry.workout.isEmpty {
-                    Text("Nothing planned for today")
+                    Text("Take it easy and recharge.")
                         .foregroundStyle(.accent)
                         .bold()
                 }
                 ForEach(entry.workout){ workout in
                     VStack (alignment: .leading) {
                         HStack {
+//                            AppIntentButton(intent: ButtonIntent(id: workout.id.uuidString)) {
+//                                Label("Toggle Done", systemImage: workout.isDone ? "checkmark.circle.fill" : "circle")
+//                            }
                             Text(workout.title)
                                 .font(.title)
                                 .fontWeight(.bold)
@@ -106,8 +145,7 @@ struct whatsTodayWidget: Widget {
 #Preview(as: .systemSmall) {
     whatsTodayWidget()
 } timeline: {
-    SimpleEntry(date: .now, workout: [Workout(title: "long run", date: .now, type: WorkoutType.running, tags: ["test",], summary: "Test Run"),
-                                      Workout(title: "ride", date: .now, type: WorkoutType.cycling, tags: ["test",], summary: "Test Run")])
+    SimpleEntry(date: .now, workout: [])
 }
 
 

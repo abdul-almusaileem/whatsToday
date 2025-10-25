@@ -91,7 +91,6 @@ struct WorkoutCard: View {
             length * 0.9
         }
         .fixedSize()
-//        .frame(width: 120, height: 1)
 
         
     }

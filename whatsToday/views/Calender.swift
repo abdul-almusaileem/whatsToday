@@ -12,10 +12,43 @@ import SwiftData
 struct Calender: View {
     @State private var selectedDate: Date?
     @State private var filteredWorkouts: [Workout] = []
-    @State private var sheetIsPresented: Bool = false
+    @State private var selectedWorkout: Workout?
     
     @Query(sort: \Workout.date, order: .reverse) private var workouts: [Workout]
-
+    
+    var workoutsThisMonth: [Workout] {
+        let calendar = Calendar.current
+        var customCalendar = calendar
+        let dateToUse = selectedDate ?? Date()
+        customCalendar.firstWeekday = 1
+        
+        return workouts.filter { workout in
+            customCalendar.isDate(workout.date, equalTo: dateToUse, toGranularity: .month) &&
+            customCalendar.isDate(workout.date, equalTo: dateToUse, toGranularity: .year)
+        }
+    }
+    var finishedThisMonth: [Workout] {
+        workoutsThisMonth.filter { workout in
+            workout.isDone
+        }
+    }
+    var workoutsThisWeek: [Workout] {
+        let calendar = Calendar.current
+        var customCalendar = calendar
+        let dateToUse = selectedDate ?? Date()
+        customCalendar.firstWeekday = 1
+        
+        return workouts.filter { workout in
+            customCalendar.isDate(workout.date, equalTo: dateToUse, toGranularity: .weekOfYear) &&
+            customCalendar.isDate(workout.date, equalTo: dateToUse, toGranularity: .year)
+        }
+    }
+    var finishedThisWeek: [Workout] {
+        workoutsThisWeek.filter { workout in
+            workout.isDone
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -27,40 +60,60 @@ struct Calender: View {
                         .fontWeight(.bold)
                         .foregroundStyle(.accent)
                         .padding()
-                        .padding(.bottom, 50)
                     
-
+                    HStack{
+                        Text("Month:")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.text)
+                            .padding(.bottom, 50)
+                        
+                        Text("\(finishedThisMonth.count)/\(workoutsThisMonth.count)")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.text)
+                            .padding()
+                            .padding(.bottom, 50)
+                        
+                        Text("Week:")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.text)
+                            .padding(.bottom, 50)
+                        
+                        Text("\(finishedThisWeek.count)/\(workoutsThisWeek.count)")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.text)
+                            .padding()
+                            .padding(.bottom, 50)
+                    }
+                    
                     CalendarViewRepresentable(workouts: workouts, selectedDate: $selectedDate)
-                        .frame(height: 500)
-                        .padding()
+                        .frame(height: 400)
                     Spacer()
                 }
                 .onChange(of: selectedDate) { oldval, newValue in
+                    
                     if let newValue = newValue {
                         filteredWorkouts = workouts.filter {
                             $0.date.formatted(date: .numeric, time: .omitted) == newValue.formatted(date: .numeric, time: .omitted)
                         }
                     }
                     
-                    if filteredWorkouts.count > 0 {
-                        sheetIsPresented.toggle()
+                    if let firstWorkout = filteredWorkouts.first{
+                            selectedWorkout = firstWorkout;
                     }
-                    
                 }
-                .sheet(isPresented: $sheetIsPresented) {
+                
+                .sheet(item: $selectedWorkout) { _ in
                     WorkoutList(workouts: filteredWorkouts)
                 }
             }
         }
-               
-        
-        
     }
 }
 
 #Preview {
     Calender()
-    
-
-    
 }
