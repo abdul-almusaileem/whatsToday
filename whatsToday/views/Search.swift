@@ -31,38 +31,45 @@ struct Search: View {
     
     var body: some View {
         NavigationStack {
-            Text("Search")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(.accent)
-                .padding()
-                .padding(.bottom, 50)
-            
-            Spacer()
-            List {
-                ForEach(filteredWorkouts) { workout in
-                    WorkoutCard(workout: workout)
-                        .onTapGesture {
-                            selectedWorkout = workout;
-                            detailsSheet.toggle()
-                        }
+            ZStack{
+                Color.background.opacity(1).ignoresSafeArea()
+                VStack{
+                    Text("Search")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.accent)
                         .padding()
+                        .padding(.bottom, 50)
                     
-                }
-                .onDelete(perform: { indexSet in
-                    for index in indexSet {
-                        modelContext.delete(filteredWorkouts[index])
-                        
-                        if(Calendar.current.isDateInToday(filteredWorkouts[index].date)) {
-                            print("reloading widget")
-                            WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
+                    Spacer()
+                    List {
+                        ForEach(filteredWorkouts) { workout in
+                            WorkoutCard(workout: workout)
+                                .onTapGesture {
+                                    selectedWorkout = workout;
+                                    detailsSheet.toggle()
+                                }
+                                .padding()
+                            
                         }
+                        .onDelete(perform: { indexSet in
+                            for index in indexSet {
+                                modelContext.delete(filteredWorkouts[index])
+                                
+                                if(Calendar.current.isDateInToday(filteredWorkouts[index].date)) {
+                                    print("reloading widget")
+                                    WidgetCenter.shared.reloadTimelines(ofKind: "whatsTodayWidget")
+                                }
+                            }
+                        })
                     }
-                })
+                    .scrollContentBackground(.hidden)
+                    .animation(.easeIn, value: filteredWorkouts)
+                }
+                
             }
-            .scrollContentBackground(.hidden)
-            .animation(.easeIn, value: filteredWorkouts)
-            
+        }
+    
             
             
             
@@ -73,7 +80,7 @@ struct Search: View {
                     
         }
     }
-}
+
 
 #Preview {
     Search()

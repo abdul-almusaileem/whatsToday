@@ -14,7 +14,7 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 import SwiftData
 
 @Observable

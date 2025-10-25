@@ -40,8 +40,6 @@ struct Provider: @preconcurrency TimelineProvider {
         
         let workouts: [Workout]? = try? modelContainer.mainContext.fetch(descriptor)
         
-        print(workouts!)
-        
         return workouts ?? []
         
     }
@@ -55,35 +53,38 @@ struct SimpleEntry: TimelineEntry {
 struct whatsTodayWidgetEntryView : View {
     var entry: Provider.Entry
     var body: some View {
-        VStack {
-            if entry.workout.isEmpty {
-                Text("Nothing planned for today")
-                    .foregroundStyle(.accent)
-                    .bold()
-            }
-            ForEach(entry.workout){ workout in
-                VStack (alignment: .leading) {
-                    HStack {
-                        Text(workout.title)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .minimumScaleFactor(0.5)
-                            .foregroundStyle(.accent)
-                        
-                        Spacer()
-                        
-                        Text(workout.type.rawValue)
+        ZStack {
+            VStack {
+                if entry.workout.isEmpty {
+                    Text("Nothing planned for today")
+                        .foregroundStyle(.accent)
+                        .bold()
+                }
+                ForEach(entry.workout){ workout in
+                    VStack (alignment: .leading) {
+                        HStack {
+                            Text(workout.title)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .minimumScaleFactor(0.5)
+                                .foregroundStyle(.accent)
+                            
+                            Spacer()
+                            
+                            Text(workout.type.rawValue)
+                                .foregroundStyle(.text)
+                                .font(.caption)
+                        }
+                        Text(workout.summary)
                             .foregroundStyle(.text)
-                            .font(.caption)
+                            .font(.caption2)
+                            .lineLimit(4)
+                        Divider()
                     }
-                    Text(workout.summary)
-                        .foregroundStyle(.text)
-                        .font(.caption2)
-                        .lineLimit(4)
-                    Divider()
                 }
             }
         }
+        .containerBackground(Color.background, for: .widget)
         
         
     }

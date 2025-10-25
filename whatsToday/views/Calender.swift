@@ -48,7 +48,7 @@ struct Calender: View {
                     
                 }
                 .sheet(isPresented: $sheetIsPresented) {
-                    WorkoutList(sheet: $sheetIsPresented, workouts: filteredWorkouts)
+                    WorkoutList(workouts: filteredWorkouts)
                 }
             }
         }

@@ -22,9 +22,9 @@ struct TodaysWorkout: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.background.opacity(1).ignoresSafeArea()
+                Color.background.ignoresSafeArea()
                 VStack {
-                    Text(upcomingWorkouts.count > 1 ? "Upcoming sessions" : "Upcoming session")
+                    Text(upcomingWorkouts.count > 1 ? "Today's sessions" : "Today's session")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(.accent)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SmallWorkoutCard: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     var workout: Workout
     var body: some View {
         VStack{
@@ -64,7 +65,12 @@ struct SmallWorkoutCard: View {
         .padding(5)
         .background(themeManager.currentTheme.backgroundColor)
         .cornerRadius(20)
-        .shadow(radius: 5)
+        .shadow(
+            color: colorScheme == .dark
+                ? Color.white.opacity(0.1)
+                : Color.black.opacity(0.2),
+            radius: 5, x: 0, y: 3
+        )
         .listRowBackground(Color.clear)
         .containerRelativeFrame(.horizontal) { length, axis in
             length * 0.9
